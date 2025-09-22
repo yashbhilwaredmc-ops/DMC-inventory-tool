@@ -161,26 +161,26 @@ class DMCInventoryApp:
             col1, col2, col3 = st.columns(3)
             
             with col1:
-                assets_id = st.text_input("Assets ID*")
-                system_type = st.text_input("System Type")
-                location = st.selectbox("Location", ["", "Indore", "Mumbai"])
-                brand = st.text_input("Brand")
+                assets_id = st.text_input("Assets ID*", key="it_assets_id")
+                system_type = st.text_input("System Type", key="it_system_type")
+                location = st.selectbox("Location", ["", "Indore", "Mumbai"], key="it_location")
+                brand = st.text_input("Brand", key="it_brand")
                 
             with col2:
-                model = st.text_input("Model")
-                serial_number = st.text_input("Serial Number*")
-                status = st.selectbox("Status", ["", "Available", "Allocated", "Under Maintenance"])
-                windows = st.text_input("Windows")
+                model = st.text_input("Model", key="it_model")
+                serial_number = st.text_input("Serial Number*", key="it_serial_number")
+                status = st.selectbox("Status", ["", "Available", "Allocated", "Under Maintenance"], key="it_status")
+                windows = st.text_input("Windows", key="it_windows")
                 
             with col3:
-                config = st.text_input("Config")
-                warranty_status = st.selectbox("Warranty Status", ["", "Active", "Expired", "No Warranty", "AMC"])
-                last_audit_date = st.date_input("Last Audit Date")
-                remarks = st.text_area("Remarks")
+                config = st.text_input("Config", key="it_config")
+                warranty_status = st.selectbox("Warranty Status", ["", "Active", "Expired", "No Warranty", "AMC"], key="it_warranty")
+                last_audit_date = st.date_input("Last Audit Date", key="it_audit_date")
+                remarks = st.text_area("Remarks", key="it_remarks")
             
             col1, col2, col3, col4 = st.columns(4)
             with col1:
-                if st.button("Add Item", type="primary"):
+                if st.button("Add Item", type="primary", key="it_add_btn"):
                     self.add_it_item({
                         "Assets ID": assets_id, "System Type": system_type, "Location": location,
                         "Brand": brand, "Model": model, "Serial Number": serial_number,
@@ -190,15 +190,15 @@ class DMCInventoryApp:
                     })
             
             with col2:
-                if st.button("Update Item"):
+                if st.button("Update Item", key="it_update_btn"):
                     st.info("Select an item from the table below to update")
             
             with col3:
-                if st.button("Clear Form"):
+                if st.button("Clear Form", key="it_clear_btn"):
                     st.rerun()
             
             with col4:
-                if st.button("Export to Excel"):
+                if st.button("Export to Excel", key="it_export_btn"):
                     self.export_it_to_excel()
         
         # Search and filters
@@ -206,10 +206,10 @@ class DMCInventoryApp:
         search_col, filter_col = st.columns([2, 1])
         
         with search_col:
-            search_term = st.text_input("Search IT Inventory", placeholder="Search by any field...")
+            search_term = st.text_input("Search IT Inventory", placeholder="Search by any field...", key="it_search")
         
         with filter_col:
-            status_filter = st.selectbox("Filter by Status", ["All", "Available", "Allocated", "Under Maintenance"])
+            status_filter = st.selectbox("Filter by Status", ["All", "Available", "Allocated", "Under Maintenance"], key="it_status_filter")
         
         # Display data
         self.display_it_inventory(search_term, status_filter)
@@ -325,7 +325,8 @@ class DMCInventoryApp:
                 label="Download IT Inventory Excel",
                 data=output.getvalue(),
                 file_name=f"IT_Inventory_Export_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx",
-                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                key="it_download_btn"
             )
             
             logging.info("IT Inventory exported to Excel")
@@ -343,35 +344,35 @@ class DMCInventoryApp:
             col1, col2, col3 = st.columns(3)
             
             with col1:
-                employee_name = st.text_input("Employee Name*")
-                assets_id = st.text_input("Assets ID*")
-                system_type = st.text_input("System Type")
-                location = st.selectbox("Location", ["", "Indore", "Mumbai"])
+                employee_name = st.text_input("Employee Name*", key="tracker_employee")
+                assets_id = st.text_input("Assets ID*", key="tracker_assets_id")
+                system_type = st.text_input("System Type", key="tracker_system_type")
+                location = st.selectbox("Location", ["", "Indore", "Mumbai"], key="tracker_location")
                 
             with col2:
-                brand = st.text_input("Brand")
-                model = st.text_input("Model")
-                serial_number = st.text_input("Serial Number")
-                status = st.selectbox("Status", ["", "Allocated", "Returned", "Pending Return"])
+                brand = st.text_input("Brand", key="tracker_brand")
+                model = st.text_input("Model", key="tracker_model")
+                serial_number = st.text_input("Serial Number", key="tracker_serial_number")
+                status = st.selectbox("Status", ["", "Allocated", "Returned", "Pending Return"], key="tracker_status")
                 
             with col3:
-                windows = st.text_input("Windows")
-                config = st.text_input("Config")
-                warranty_status = st.selectbox("Warranty Status", ["", "Active", "Expired", "No Warranty", "AMC"])
-                phone_number = st.text_input("Phone Number")
+                windows = st.text_input("Windows", key="tracker_windows")
+                config = st.text_input("Config", key="tracker_config")
+                warranty_status = st.selectbox("Warranty Status", ["", "Active", "Expired", "No Warranty", "AMC"], key="tracker_warranty")
+                phone_number = st.text_input("Phone Number", key="tracker_phone")
             
             col1, col2 = st.columns(2)
             with col1:
-                date_of_allocation = st.date_input("Date of Allocation")
+                date_of_allocation = st.date_input("Date of Allocation", key="tracker_alloc_date")
             with col2:
-                date_of_return = st.date_input("Date of Return")
+                date_of_return = st.date_input("Date of Return", key="tracker_return_date")
             
-            extra_allocated_item = st.text_area("Extra Allocated Item")
-            last_audit_date = st.date_input("Last Audit Date")
+            extra_allocated_item = st.text_area("Extra Allocated Item", key="tracker_extra_item")
+            last_audit_date = st.date_input("Last Audit Date", key="tracker_audit_date")
             
             col1, col2, col3, col4 = st.columns(4)
             with col1:
-                if st.button("Add Record", type="primary", key="add_record"):
+                if st.button("Add Record", type="primary", key="tracker_add_btn"):
                     self.add_tracker_record({
                         "Employee Name": employee_name, "Assets ID": assets_id, 
                         "System Type": system_type, "Location": location,
@@ -385,15 +386,15 @@ class DMCInventoryApp:
                     })
             
             with col2:
-                if st.button("Update Record", key="update_record"):
+                if st.button("Update Record", key="tracker_update_btn"):
                     st.info("Select a record from the table below to update")
             
             with col3:
-                if st.button("Clear Form", key="clear_tracker_form"):
+                if st.button("Clear Form", key="tracker_clear_btn"):
                     st.rerun()
             
             with col4:
-                if st.button("Export to Excel", key="export_tracker"):
+                if st.button("Export to Excel", key="tracker_export_btn"):
                     self.export_tracker_to_excel()
         
         # Search and filters
@@ -404,7 +405,7 @@ class DMCInventoryApp:
             search_term = st.text_input("Search Inventory Records", placeholder="Search by any field...", key="tracker_search")
         
         with filter_col:
-            status_filter = st.selectbox("Filter by Status", ["All", "Allocated", "Returned", "Pending Return"], key="tracker_filter")
+            status_filter = st.selectbox("Filter by Status", ["All", "Allocated", "Returned", "Pending Return"], key="tracker_status_filter")
         
         # Display data
         self.display_inventory_tracker(search_term, status_filter)
@@ -524,7 +525,8 @@ class DMCInventoryApp:
                 label="Download Inventory Tracker Excel",
                 data=output.getvalue(),
                 file_name=f"Inventory_Tracker_Export_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx",
-                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                key="tracker_download_btn"
             )
             
             logging.info("Inventory Tracker exported to Excel")
@@ -544,24 +546,27 @@ class DMCInventoryApp:
             report_type = st.selectbox(
                 "Select Report Type",
                 ["Asset Summary Report", "Allocation History", "Warranty Expiry Report", 
-                 "Maintenance Schedule", "Audit Trail Report"]
+                 "Maintenance Schedule", "Audit Trail Report"],
+                key="report_type"
             )
             
             date_range = st.date_input(
                 "Select Date Range",
                 value=(datetime.date.today() - datetime.timedelta(days=30), datetime.date.today()),
                 max_value=datetime.date.today(),
-                help="Select start and end date for the report"
+                help="Select start and end date for the report",
+                key="report_date_range"
             )
         
         with col2:
             export_format = st.radio(
                 "Export Format",
                 ["PDF", "Excel", "CSV"],
-                horizontal=True
+                horizontal=True,
+                key="export_format"
             )
             
-            if st.button("Generate Report", type="primary"):
+            if st.button("Generate Report", type="primary", key="generate_report_btn"):
                 self.generate_report(report_type, date_range, export_format)
         
         # Report preview area
@@ -601,7 +606,8 @@ class DMCInventoryApp:
                     label=f"Download {report_type} as {export_format}",
                     data=f"Sample {report_type} content in {export_format} format",
                     file_name=f"{report_type.replace(' ', '_')}_{datetime.datetime.now().strftime('%Y%m%d')}.{export_format.lower()}",
-                    mime="application/octet-stream"
+                    mime="application/octet-stream",
+                    key="report_download_btn"
                 )
                 
                 logging.info(f"Report generated: {report_type}")
